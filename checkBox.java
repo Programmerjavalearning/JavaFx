@@ -1,6 +1,8 @@
 package com.example.checkboxes;
 
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class checkBox extends Application {
+public class checkBox extends Application implements EventHandler {
     private Label title;
     private Label response;
     private Label selected;
@@ -37,26 +39,52 @@ public class checkBox extends Application {
 
         //Setup the stage and scene
         FlowPane flowPaneRoot = new FlowPane(Orientation.VERTICAL, 5,5);
-        Scene scene = new Scene(flowPaneRoot,400,250);
+
         flowPaneRoot.setAlignment(Pos.CENTER);
 
         // Where we add our controls
         flowPaneRoot.getChildren().add(title);
         flowPaneRoot.getChildren().addAll(bananaCB,mangoCB,papayaCB,
                 grapCB,response,selected);
+        
+        //add EventListener to our checkboxes
 
-
+        Scene scene = new Scene(flowPaneRoot,400,250);
         stage.setScene(scene);
         stage.show();
+
         showAll();
 
     }
 
     void showAll (){
         fruits="";
+        if (bananaCB.isSelected()) fruits = "Banana";
+        selected.setText("Fruits selected = " + fruits);
     }
 
-    public static void main(String[] args) {
-        launch();
+    public static void main(String[] args) { launch(); }
+
+    @Override
+    public void handle(Event event) {
+        System.out.println("Test");
+        Object fruitsSelected = event.getSource();
+        if(bananaCB.equals(fruitsSelected)){
+            if(bananaCB.isSelected()){
+                response.setText("Banana Selected");
+            }else {
+                response.setText("Banana not selected");
+                showAll();
+            }
+        }
+        if(mangoCB.equals(fruitsSelected)){
+            if(mangoCB.isSelected()){
+                response.setText("Banana Selected");
+            }else {
+                response.setText("Banana not selected");
+            }
+        }
+
+
     }
 }
